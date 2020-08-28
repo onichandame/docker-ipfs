@@ -8,6 +8,8 @@ docker image for ipfs with better defaults
 
 # Why not official image
 
-The official image comes with minimal customization so most of the settings are default. One of the default settings is to enable CORS protection, so that only localhost from the machine running the daemon is allowed to use the REST API.
+The official image comes with minimal customization so most of the settings are default. What's more cumbersome is that the configuration file resides in the data directory. The data directory should be mounted from the host system. As a result, the configuration is overwritten everytime the container is up. Currently there is no easy way to set configurations at building stage. One has to run the commands in the [Dockerfile](./Dockerfile) manually after the container is up.
 
-However when the daemon is running in a container, the API requests usually do not come from the container itself. So such protection must be disabled.
+Some CLI flags are set for my own convenience:
+
+1. `--enable-pubsub-experiment` enables pubsub
