@@ -1,5 +1,9 @@
 name: Publish Docker
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - "LICENSE"
+      - "README.md"
 jobs:
   publish:
     runs-on: ubuntu-latest
