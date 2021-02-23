@@ -16,6 +16,8 @@ Moreover, the configurations can only be changed after `ipfs init` and before `i
 
 `docker run onichandame/ipfs`
 
+Command line arguments of `ipfs daemon` can be specified in env variable `DAEMON_ARGS`
+
 # Configuration
 
 There are 2 ways to configure the IPFS daemon:

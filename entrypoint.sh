@@ -2,4 +2,4 @@ ipfs init
 for f in /etc/ipfs/*; do
   cat "$f" | sh
 done
-ipfs daemon $@
+ipfs daemon "$DAEMON_ARGS"
