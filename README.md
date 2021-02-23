@@ -8,18 +8,22 @@ docker image for ipfs with better defaults
 
 # Why not official image
 
-The official image comes with minimal customization so most of the settings are default. What's more cumbersome is that the configuration file resides in the data directory. The data directory should be mounted from the host system. As a result, the configuration is overwritten everytime the container is up. Currently there is no easy way to set configurations at building stage. One has to run the commands in the [Dockerfile](./Dockerfile) manually after the container is up.
+The official image comes with minimal customization so most of the settings are default. What's more cumbersome is that the configuration file resides in the data directory and that the data directory should be mounted from the host system. As a result, the configuration is overwritten everytime the container is up.
 
-Some options are set for my own convenience:
+Moreover, the configurations can only be changed after `ipfs init` and before `ipfs daemon`. The official image does not offer an easy way to do that.
 
-1. pubsub enabled
-2. cors allowed
+# Usage
 
-# Recommended Usage
+`docker run onichandame/ipfs`
 
-`docker run -d --restart always -p 5001:5001 -v /ipfs/datastore:/root/.ipfs/datastore -v /ipfs/blocks:/root/.ipfs/blocks onichandame/ipfs`
+# Configuration
 
-The REST API is exposed to port 5001 to allow the access from [ipfs-http-client](https://www.npmjs.com/package/ipfs-http-client).
+There are 2 ways to configure the IPFS daemon:
+
+1. mount the configuration file
+2. mount some scripts
+
+## Mount The Configuration File
 
 Under the root data directory, there are 2 subdirectories for data storage and 1 file for configuration. The official README of go-ipfs recommends to mount the root data directory from host. This setup will overwrite the pre-set configuration on container creation.
 
@@ -28,3 +32,9 @@ My recommendation would be to mount the 2 subdirectories but the root directory 
 - root: `/root/.ipfs`
 - data subdirectories: `/root/.ipfs/datastore` and `/root/.ipfs/blocks`
 - configuration: `/root/.ipfs/config`
+
+## Mount The Scripts
+
+The scripts in `/etc/ipfs` are run after `ipfs init` and `ipfs daemon`. The scripts are run in series but the order of execution is not guaranteed.
+
+The example scripts are [here](./ipfs).
